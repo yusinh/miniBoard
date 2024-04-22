@@ -35,8 +35,7 @@ public class MainController {
         }
         Notebook targetNotebook = notebookList.get(0);
 
-        //1. DB에서 데이터 꺼내오기
-        List<Note> noteList = noteRepository.findAll();
+        List<Note> noteList = noteRepository.findByNotebook(targetNotebook);
 
         if(noteList.isEmpty()) {
             noteService.saveDefault(targetNotebook);

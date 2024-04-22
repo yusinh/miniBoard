@@ -33,9 +33,10 @@ public class NoteController {
 
         List<Notebook> notebookList = notebookRepository.findAll();
         Notebook targetNotebook = notebookRepository.findById(notebookId).get();
+        List<Note> noteList = noteRepository.findByNotebook(targetNotebook);
 
         model.addAttribute("targetNote", note);
-        model.addAttribute("noteList", noteRepository.findAll());
+        model.addAttribute("noteList", noteList);
         model.addAttribute("targetNotebook", targetNotebook);
         model.addAttribute("notebookList", notebookList);
 
@@ -53,7 +54,7 @@ public class NoteController {
         note.setContent(content);
 
         noteRepository.save(note);
-        return "redirect:/detail/" + id;
+        return "redirect:/books/%d/notes/%d".formatted(notebookId, id);
     }
 
     @PostMapping("{id}/delete")
