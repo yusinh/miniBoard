@@ -11,8 +11,8 @@
     <div class="bg-blue-300">
         <a href="/">logo</a>
     </div>
-    <div class="bg-red-600 flex">
-        <div class="bg-indigo-300 w-[20%]">
+    <div class="bg-red-600 flex ">
+        <div class="bg-indigo-300 w-[20%] text-center">
             <ul class="h-[100%] overflow-scroll">
                 <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''" >
                     <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>

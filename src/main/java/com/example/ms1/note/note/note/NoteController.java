@@ -65,5 +65,4 @@ public class NoteController {
         return "redirect:/";
     }
 
-
 }

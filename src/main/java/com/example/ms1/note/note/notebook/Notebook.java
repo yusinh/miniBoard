@@ -11,7 +11,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Notebook {
+public class Notebook { // 그룹 노트북 관점, 일반 노트북 관점
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +19,17 @@ public class Notebook {
 
     private String name;
 
+    @ManyToOne
+    private Notebook parent;
+
     @OneToMany(mappedBy = "notebook")
     List<Note> noteList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "parent")
+    List<Notebook> children = new ArrayList<>();
+
+
 }
+
+
+
