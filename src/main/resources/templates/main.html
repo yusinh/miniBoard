@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/main.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.5/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -13,9 +14,21 @@
     </div>
     <div class="bg-red-600 flex ">
         <div class="bg-indigo-300 w-[20%] text-center">
-            <ul class="h-[100%] overflow-scroll">
+            <ul class="menu h-[100%] overflow-scroll">
                 <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''" >
-                    <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+                    <th:block th:if="${!#lists.isEmpty(notebook.children)}">
+                    <details open>
+                        <summary><a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a></summary>
+                        <ul>
+                            <li th:each="child : ${notebook.children}">
+                                <a th:href="@{|/books/${child.id}|}" th:text="${child.name}"></a>
+                            </li>
+                        </ul>
+                    </details>
+                    </th:block >
+                    <th:block th:if="${#lists.isEmpty(notebook.children) and notebook.parent == null}">
+                        <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
+                    </th:block>
                 </li>
             </ul>
             <form th:action="@{|/books/write|}" method="post">
@@ -37,6 +50,7 @@
             <form th:action="@{|/books/${targetNotebook.id}/notes/write|}" method="post">
                 <input type="submit" value="추가">
             </form>
+
         </div>
 
         <div class="bg-green-300 w-[60%]">
@@ -63,7 +77,7 @@
 </body>
 <script>
     function update() {
-        
+
         const form = document.getElementById("updateForm");
         const result = confirm("수정하시겠습니까?");
 
