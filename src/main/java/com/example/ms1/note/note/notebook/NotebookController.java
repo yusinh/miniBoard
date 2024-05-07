@@ -1,7 +1,6 @@
 package com.example.ms1.note.note.notebook;
 
 import com.example.ms1.note.note.note.Note;
-import com.example.ms1.note.note.note.NoteRepository;
 import com.example.ms1.note.note.note.NoteService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -33,4 +32,17 @@ public class NotebookController {
         return "redirect:/books/%d/notes/%d".formatted(id, note.getId());
     }
 
+    @PostMapping("/groups/{notebookId}/books/write")
+    public String groupWrite(@PathVariable("notebookId") Long notebookId) {
+        Notebook parent = notebookRepository.findById(notebookId).orElseThrow();
+
+        Notebook child = new Notebook();
+        child.setName("새노트북");
+        notebookRepository.save(child);
+
+        parent.addChild(child);
+        notebookRepository.save(parent);
+
+        return "redirect:/";
+    }
 }

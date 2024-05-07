@@ -28,6 +28,10 @@ public class Notebook { // 그룹 노트북 관점, 일반 노트북 관점
     @OneToMany(mappedBy = "parent")
     List<Notebook> children = new ArrayList<>();
 
+    public void addChild(Notebook child) {
+        child.setParent(this);
+        children.add(child);
+    }
 
 }
 
