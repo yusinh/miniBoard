@@ -40,6 +40,7 @@ public class NotebookController {
         child.setName("새노트북");
         notebookRepository.save(child);
 
+        noteService.saveDefault(child);
         parent.addChild(child);
         notebookRepository.save(parent);
 
