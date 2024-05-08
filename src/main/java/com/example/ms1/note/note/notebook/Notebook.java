@@ -29,10 +29,14 @@ public class Notebook { // 그룹 노트북 관점, 일반 노트북 관점
     List<Notebook> children = new ArrayList<>();
 
     public void addChild(Notebook child) {
-        child.setParent(this);
-        children.add(child);
+        child.setParent(this); // 자식쪽에서 부모 설정
+        children.add(child); // 부모쪽에서 자식 목록에 자식 추가설정
     }
 
+    public void addNote(Note note) {
+        note.setNotebook(this);
+        noteList.add(note);
+    }
 }
 
 

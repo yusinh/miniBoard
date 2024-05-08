@@ -30,7 +30,7 @@
                             </li>
                         </ul>
                     </details>
-                    </th:block >
+                    </th:block>
                     <th:block th:if="${#lists.isEmpty(notebook.children) and notebook.parent == null}">
                         <a th:class="${basic}"
                            th:classappend="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''" th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>

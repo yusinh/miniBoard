@@ -38,7 +38,9 @@ public class MainController {
         List<Note> noteList = noteRepository.findByNotebook(targetNotebook);
 
         if(noteList.isEmpty()) {
-            noteService.saveDefault(targetNotebook);
+            Note note = noteService.saveDefault();
+            targetNotebook.addNote(note);
+            notebookRepository.save(targetNotebook);
             return "redirect:/";
         }
 
