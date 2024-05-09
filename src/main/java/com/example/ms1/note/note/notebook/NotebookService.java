@@ -14,6 +14,7 @@ public class NotebookService {
     private final NotebookRepository notebookRepository;
     private final NoteService noteService;
 
+
     public Notebook getNotebook(Long notebookId) {
         return notebookRepository.findById(notebookId).orElseThrow();
     }

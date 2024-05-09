@@ -38,6 +38,3 @@ public class Notebook { // 그룹 노트북 관점, 일반 노트북 관점
         noteList.add(note);
     }
 }
-
-
-

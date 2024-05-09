@@ -11,20 +11,24 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class NotebookController {
-    private final NotebookService notebookService;
+    private final NotebookRepository notebookRepository;
     private final NoteService noteService;
-
 
     @PostMapping("/books/write")
     public String write() {
+        Notebook notebook = new Notebook();
+        notebook.setName("새노트북");
 
-        notebookService.saveDefault();
+        Note note = noteService.saveDefault();
+        notebook.addNote(note);
+
+        notebookRepository.save(notebook);
 
         return "redirect:/";
     }
     @GetMapping("/books/{id}")
     public String detail(@PathVariable("id") Long id) {
-        Notebook notebook = notebookService.getNotebook(id);
+        Notebook notebook = notebookRepository.findById(id).orElseThrow();
         Note note = notebook.getNoteList().get(0);
 
         return "redirect:/books/%d/notes/%d".formatted(id, note.getId());
@@ -32,19 +36,17 @@ public class NotebookController {
 
     @PostMapping("/groups/{notebookId}/books/write")
     public String groupWrite(@PathVariable("notebookId") Long notebookId) {
-
-        Notebook parent = notebookService.getNotebook(notebookId);
+        Notebook parent = notebookRepository.findById(notebookId).orElseThrow();
 
         Notebook child = new Notebook();
         child.setName("새노트북");
 
         Note note = noteService.saveDefault();
         child.addNote(note);
-
-        notebookService.save(child);
+        notebookRepository.save(child);
 
         parent.addChild(child);
-        notebookService.save(parent);
+        notebookRepository.save(parent);
 
         return "redirect:/";
     }
