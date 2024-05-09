@@ -16,10 +16,8 @@ public class Notebook {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
 
     @OneToMany(mappedBy = "notebook")
     List<Note> noteList = new ArrayList<>();
-
 }

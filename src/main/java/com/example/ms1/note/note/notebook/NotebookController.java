@@ -12,11 +12,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequiredArgsConstructor
 public class NotebookController {
+
+
     private final NotebookRepository notebookRepository;
     private final NoteService noteService;
 
     @PostMapping("/books/write")
     public String write() {
+
         Notebook notebook = new Notebook();
         notebook.setName("새노트북");
 
@@ -24,7 +27,9 @@ public class NotebookController {
         noteService.saveDefault(notebook);
 
         return "redirect:/";
+
     }
+
     @GetMapping("/books/{id}")
     public String detail(@PathVariable("id") Long id) {
         Notebook notebook = notebookRepository.findById(id).orElseThrow();
@@ -32,5 +37,4 @@ public class NotebookController {
 
         return "redirect:/books/%d/notes/%d".formatted(id, note.getId());
     }
-
 }

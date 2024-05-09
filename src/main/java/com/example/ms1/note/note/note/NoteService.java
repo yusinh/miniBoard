@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 @Service
 @RequiredArgsConstructor
 public class NoteService {
-
     private final NoteRepository noteRepository;
 
     public Note saveDefault(Notebook notebook) {
@@ -19,6 +18,6 @@ public class NoteService {
         note.setCreateDate(LocalDateTime.now());
         note.setNotebook(notebook);
 
-        return this.noteRepository.save(note);
+        return noteRepository.save(note);
     }
 }

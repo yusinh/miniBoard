@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/main.css">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
@@ -14,17 +13,18 @@
     <div class="bg-red-600 flex">
         <div class="bg-indigo-300 w-[20%]">
             <ul class="h-[100%] overflow-scroll">
-                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''" >
+                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-600' : ''">
                     <a th:href="@{|/books/${notebook.id}|}" th:text="${notebook.name}"></a>
                 </li>
             </ul>
+
             <form th:action="@{|/books/write|}" method="post">
                 <input type="submit" value="추가">
             </form>
         </div>
-        <div class="bg-red-300 w-[20%] h-[800px] text-center">
+        <div class="bg-red-300 w-[20%] h-[800px] text-center ">
             <ul class="h-[100%] overflow-scroll">
-                <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-blue-600' : ''" >
+                <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-blue-600' : ''">
                     <a th:href="@{|/books/${targetNotebook.id}/notes/${note.id}|}" th:text="${note.title}"></a>
                 </li>
             </ul>
@@ -46,7 +46,7 @@
                     <textarea name="content" cols="30" rows="10" th:text="${targetNote.content}"></textarea>
                 </div>
                 <div>
-                    <input type="button" value="수정" onclick="update();">
+                    <input type="button" value="수정" onclick="updateForm()">
                 </div>
             </form>
             <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/delete|}" method="post" id="deleteForm">
@@ -57,23 +57,17 @@
 </div>
 </body>
 <script>
-    function update() {
-        
+    function updateForm() {
         const form = document.getElementById("updateForm");
-        const result = confirm("수정하시겠습니까?");
-
-        if(result) {
+        if(confirm("수정하시겠습니까?")) {
             form.submit();
         }
     }
 
     function deleteForm() {
-
-    const form = document.getElementById("deleteForm");
-    const result = confirm("삭제하시겠습니까?");
-
-    if(result) {
-        form.submit();
+        const form = document.getElementById("deleteForm");
+        if(confirm("삭제하시겠습니까?")) {
+            form.submit();
         }
     }
 </script>
